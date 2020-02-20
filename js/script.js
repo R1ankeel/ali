@@ -6,6 +6,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const goodsWrapper = document.querySelector(".goods-wrapper");
   const category = document.querySelector('.category');
 
+  const loading = () => {
+    goodsWrapper.innerHTML = `<div id="spinner"><div class="spinner-loading"><div><div><div></div>
+        </div><div><div></div></div><div><div></div></div><div><div></div></div></div></div></div>`
+  };
+
 
   const createCardGoods = (id, title, price, img) => {
     const card = document.createElement('div');
@@ -56,6 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const getGoods = (handler, filter) => {
+    loading();
     fetch('db/db.json')
         .then(response => response.json())
         .then(filter)
@@ -76,9 +82,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  const searchGoods = event => {
+    event.preventDefault();
+  };
+
   cartBtn.addEventListener('click', openCart);
   cart.addEventListener('click', closeCart);
   category.addEventListener('click', categorySelector);
+  search.addEventListener('submit', searchGoods);
 
   getGoods(renderCard, randomSort);
 
